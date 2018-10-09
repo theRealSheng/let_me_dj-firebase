@@ -19,8 +19,7 @@ class SearchPage extends Component {
   videoSearch = (term) => {
     YTSearch({ key: API_KEY, term: term }, (videos) => {
       this.setState({
-        searchVideos: videos,
-        selectedVideo: videos[0]
+        searchVideos: videos
       });
     });
   }
