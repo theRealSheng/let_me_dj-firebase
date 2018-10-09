@@ -4,7 +4,7 @@ import YTSearch from 'youtube-api-search'
 import SearchBar from '../components/search/search-bar';
 import VideoList from '../components/search/video-list';
 
-const API_KEY = '';
+
 
 class SearchPage extends Component {
   constructor(props) {
@@ -33,6 +33,16 @@ class SearchPage extends Component {
     if (isAlreadyThere === -1) {
       this.setState({
         myVideoList: [...myVideoList,video]
+      })
+      const data = this.state.myVideoList;
+
+      fetch('url', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      })
+      .then(() => res.json())
+      .then((info) => {
+        console.log(info)
       })
     }
   }
