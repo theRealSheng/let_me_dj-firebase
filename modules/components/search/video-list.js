@@ -4,15 +4,16 @@ import VideoItem from './video-item';
 
 class VideoList extends Component {
     
-  render() {
-    VideoItem = props.videos.map((video) => {
-      return (
+  VideoItem = props.videos.map((video) => {
+    return (
       <VideoList
         onVideoSelect={props.onVideoSelect}
         key={video.etag}
         video={video} />
       );
-    })
+  });
+
+  render() {
     return (
       <View>
         {VideoItem}
