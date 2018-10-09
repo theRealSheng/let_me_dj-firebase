@@ -3,7 +3,6 @@
  * https://github.com/facebook/react-native
  *
  * @format
- * @flow
  */
 
 import React, {Component} from 'react';
@@ -17,11 +16,11 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-//type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
+      <SearchPage></SearchPage>
       </View>
     );
   }
