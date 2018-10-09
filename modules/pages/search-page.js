@@ -26,6 +26,17 @@ class SearchPage extends Component {
     });
   }
 
+  selectVideo = (video) => {
+    // Check if video selected was already added
+    const isAlreadyThere = myVideoList.indexOf(video);
+    // Not added, then push into the array
+    if (isAlreadyThere === -1) {
+      this.setState({
+        myVideoList: [...myVideoList,video]
+      })
+    }
+  }
+
   render() {
     return (
       <View>
@@ -33,9 +44,8 @@ class SearchPage extends Component {
           onSearchChange={this.videoSearch}
         />
         <VideoList 
-        
-        searchVideos>
-
+          onVideoSelect={this.selectVideo}
+          searchVideos>
         </VideoList>
       </View>
     );

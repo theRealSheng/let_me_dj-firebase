@@ -3,6 +3,9 @@ import { View } from 'react-native';
 import VideoItem from './video-item';
 
 class VideoList extends Component {
+  constructor(props) {
+    super(props)
+  }
     
   VideoItem = props.videos.map((video) => {
     return (
