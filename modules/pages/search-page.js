@@ -8,16 +8,18 @@ const API_KEY = '';
 class SearchPage extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      videos: [],
-      selectedVideo: null,
+      searchVideos: [],
+      myVideoList: [],
+      selectedVideo: null
     }
   }
 
-  videoSearch(term) {
+  videoSearch = (term) => {
     YTSearch({ key: API_KEY, term: term }, (videos) => {
       this.setState({
-        videos: videos,
+        searchVideos: videos,
         selectedVideo: videos[0]
       });
     });
@@ -27,7 +29,7 @@ class SearchPage extends Component {
     return (
       <View>
         <SearchBar
-          onSearchTermChange={(term) => this.videoSearch(term)}
+          onSearchChange={this.videoSearch}
         />
       </View>
     );
