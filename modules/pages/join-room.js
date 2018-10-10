@@ -5,10 +5,10 @@ import {
   Button,
   Text,
   TextInput,
-  TouchableOpacity,
-  Platform
+  Platform,
+  AsyncStorage
 } from "react-native";
-import User from "./user";
+import firebase from 'firebase';
 
 class JoinRoom extends Component {
 
@@ -17,22 +17,8 @@ class JoinRoom extends Component {
    room: ''
  }
 
-
  async componentDidMount() {
-
-   const config = {
-     apiKey: "AIzaSyDiROfE0E83mxIz2V3CDUsMmi0pO4u2lLc",
-     authDomain: "let-me-dj.firebaseapp.com",
-     databaseURL: "https://let-me-dj.firebaseio.com",
-     projectId: "let-me-dj",
-     storageBucket: "let-me-dj.appspot.com",
-     messagingSenderId: "59693446433"
-   };
-
-   firebase.initializeApp(config);
-
    this.state.currentUser = await AsyncStorage.getItem('currenUser');
-
  }
 
  onPressCreate = () => {
