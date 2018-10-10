@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import downVote from './../../../assets/pictures/DOWN.png';
+import upVote from './../../../assets/pictures/UP.png';
 
 class MusicVote extends Component {
   constructor(props) {
@@ -9,15 +11,15 @@ class MusicVote extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View>
+        <View onClick={() => this.props.onVote('down')}>
           <Image 
             style={{width: 300, height: 200}}
-             source={{uri: 'https://placekitten.com/408/287'}} />
+             source={downVote} />
         </View>
-        <View> 
+        <View onClick={() => this.props.onVote('up')}> 
           <Image  
             style={{width: 300, height: 200}}
-            source={{uri: 'https://placekitten.com/408/287'}} />
+            source={upVote} />
         </View>
       </View>
     );
