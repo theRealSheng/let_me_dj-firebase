@@ -4,6 +4,7 @@ import YTSearch from 'youtube-api-search'
 import SearchBar from '../components/search/search-bar';
 import VideoList from '../components/search/video-list';
 
+const API_KEY = 'AIzaSyDY5WbMGtUR8CKmPtolO2VLlKOsX24IbPM';
 class SearchPage extends Component {
   constructor(props) {
     super(props);
@@ -38,7 +39,7 @@ class SearchPage extends Component {
         method: 'POST',
         body: JSON.stringify(data),
       })
-      .then(() => res.json())
+      .then((res) => res.json())
       .then((info) => {
         console.log(info)
       })

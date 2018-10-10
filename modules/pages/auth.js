@@ -4,9 +4,9 @@ import {Text, TextInput, View, Button, StyleSheet} from 'react-native'
 class Auth extends Component {
   constructor(props){
     super(props);
-
+    this.state = { name: '' }
   }
-  state = { name: '' }
+  
 
   onChangeName = (name) => {
     this.setState(() => ({name}));
