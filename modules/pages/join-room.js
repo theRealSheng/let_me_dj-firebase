@@ -26,13 +26,33 @@ export default class joinRoom extends Component {
   }
 
   onPressButton() {
-    this.inputRef.clear();
-    this.setState(this.inputText);
+    // POST to Create
+    console.log(this.state.text);
+    axios
+      .post("server_url/route", {
+        createRoom: this.state.text
+      })
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 
   onClickButton() {
-    this.inputRef.clear();
-    this.setState(this.inputText);
+    // POST to Join
+    console.log(this.state.text);
+    axios
+      .post("server_url/route", {
+        joinRoom: this.state.text
+      })
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 
   render() {
@@ -48,35 +68,22 @@ export default class joinRoom extends Component {
           <TextInput
             value={this.state.text}
             maxLength={4}
-            ref={input => {
-              this.inputRef = input;
-            }}
-            onChangeText={text => {
-              this.inputText = text;
-            }}
             style={styles.input}
             autoCapitalize="characters"
             placeholder={"Create a Room"}
           />
-          <Button title={"Create"} onPress={this.onPressButton.bind(this)} />
+          <Button onPress={() => this.send.onPressButton()} title={"Create"} />
         </View>
 
         <View style={styles.inputPlace}>
           <TextInput
             value={this.state.text}
             maxLength={4}
-
-            ref={input => {
-              this.inputRef = input;
-            }}
-            onChangeText={text => {
-              this.inputText = text;
-            }}
             style={styles.input}
             autoCapitalize="characters"
             placeholder={"Join Room"}
           />
-          <Button title={"Join"} onPress={this.onClickButton.bind(this)} />
+          <Button onPress={() => this.send.onClickButton()} title={"Join"} />
         </View>
       </View>
     );
