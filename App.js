@@ -3,6 +3,7 @@ import {Platform, StyleSheet, Text, View, AsyncStorage} from 'react-native';
 // import SearchPage from './modules/pages/search-page';
 // import DjPage from './modules/pages/dj-page';
 import Auth from './modules/pages/auth';
+import JoinRoom from './modules/pages/join-room';
 import firebase from 'firebase';
 import config from './global';
 
@@ -62,6 +63,7 @@ export default class App extends Component {
       <View style={styles.container}>
         <Text>Welcome Dj!</Text>
         <Auth onSubmitUser={this.onSubmitNewUser} />
+        <JoinRoom></JoinRoom>
       </View>
     );
   }

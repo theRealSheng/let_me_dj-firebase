@@ -11,14 +11,7 @@ import {
 import firebase from 'firebase';
 import config from './global';
 
-const instructions = Platform.select({
-  ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
-  android:
-    "Double tap R on your keyboard to reload,\n" +
-    "Shake or press menu button for dev menu"
-});
-
-export default class joinRoom extends Component {
+class JoinRoom extends Component {
 
   state = {
     currentUser: '',
@@ -26,20 +19,19 @@ export default class joinRoom extends Component {
   }
 
   async componentDidMount() {
-
     firebase.initializeApp(config);
 
     this.state.currentUser = await AsyncStorage.getItem('currenUser');
-    }
+  }
 
-    onPressCreate = () => {
-      const currentUser = this.state.currentUser;
-      const room = this.state.text;
+  onPressCreate = () => {
+    const currentUser = this.state.currentUser;
+    const room = this.state.text;
 
     firebase.database().ref('roomID')
       .set({room: room, people: currentUser})
       .then((result) => {
-        console.log(result);
+        console.log('THE ROOM RESULT IS...', result);
         this.setState({room: result.key})
         // REroute to create and go to Room page
         alert('Created new room');
@@ -48,6 +40,7 @@ export default class joinRoom extends Component {
         console.log(err);
       }) 
   }
+
   onChangesRoom = (room) => {
     this.setState({room})
   }
@@ -137,4 +130,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default joinRoom;
+export default JoinRoom;
