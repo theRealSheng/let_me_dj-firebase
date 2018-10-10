@@ -19,7 +19,7 @@ class VideoList extends Component {
     });
     
     return (
-      <View style={styles.Container}>
+      <View style={styles.container}>
         <ScrollView>
           {videoItems}
         </ScrollView>
@@ -33,7 +33,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'stretch',
   },
-}
+})
 
 export default VideoList;

@@ -5,7 +5,7 @@ class VideoItem extends Component {
   render() {
     const imageURL = this.props.video.snippet.thumbnails.default.url;
     return (
-      <View style={[styles.container, {fontSize:100} ]}>
+      <View style={styles.container}>
         <View onClick={() => this.props.onSelectVideo(video)}>
           <Image
             style={{ width: 300, height: 200 }}
@@ -34,6 +34,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 25
   }
-}
+});
 
 export default VideoItem;

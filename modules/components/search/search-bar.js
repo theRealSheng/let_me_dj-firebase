@@ -18,29 +18,43 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <View>
-        <TextInput
-          value={this.state.term}
-          onChangeText={(term) => this.onChangeText(term)}
-          style={styles.textInput}
-        />
-        <Button
-          onPress={() => this.onButtonPress} title={"Search"} 
-        />
+      <View style={styles.container}>
+        <View style={styles.inputPlace}>
+          <TextInput
+            value={this.state.term}
+            onChangeText={(term) => this.onChangeText(term)}
+            style={styles.textInput}
+          />
+        </View>
+        <View style={{backgroundColor: 'red', width: 100, height: 100}}>
+          <Button
+            onPress={() => this.onButtonPress} title={"Search"} 
+          />
+        </View>
+
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  textInput: {
-    borderColor: 'blue',
-    borderWidth: .5,
-    width: 100,
-    borderRadius: 5,
-    padding: 10,
-    marginTop: 10,
-  }
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+    alignSelf: "stretch",
+    justifyContent: "flex-start",
+    margin: 10,
+    paddingTop: 60,
+    backgroundColor: "yellow"
+  },
+  inputPlace: {
+    padding: 20,
+    backgroundColor: 'green',
+    alignSelf: "stretch"
+  },
+ 
+
 });
 
 export default SearchBar;

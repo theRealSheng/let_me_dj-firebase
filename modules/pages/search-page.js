@@ -39,9 +39,8 @@ class SearchPage extends Component {
   render() {
     const searchedVideos = this.state.searchVideos;
     return (
-      <View>
+      <View style={styles.container}>>
         <SearchBar
-          onSearchChange={this.videoSearch}
         />
         <View>
           <VideoList 
@@ -52,5 +51,21 @@ class SearchPage extends Component {
     );
   }
 }
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+    alignSelf: "stretch",
+    justifyContent: "flex-start",
+    margin: 10,
+    paddingTop: 60,
+    backgroundColor: "yellow"
+  },
+  inputPlace: {
+    padding: 20,
+    backgroundColor: 'green',
+    alignSelf: "stretch"
+  },
+  
 export default SearchPage;
