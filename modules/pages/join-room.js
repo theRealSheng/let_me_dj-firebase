@@ -47,9 +47,9 @@ class JoinRoom extends Component {
 
   onPressJoin = () => {
     const currentUser = this.state.currentUser;
-    const room = this.state.room;
-    return firebase.database().ref(`room/${room}`)
-      .on('value', (data) => {
+    const roomId = this.state.room;
+    return firebase.database().ref(`room/${roomId}`)
+      .once('value', (data) => {
         const oldPeople = data.toJSON().people;
         let holdArray = [];
 
@@ -61,10 +61,15 @@ class JoinRoom extends Component {
 
         holdArray.push(currentUser);
 
-        return firebase.database().ref(`room/${room}`)
+        return firebase.database().ref(`room/${roomId}`)
           .update({ people: holdArray })
           .then((result) => {
-            this.props.navigation.navigate('DjPage', { room, currentUser });
+            this.props.navigation.navigate('DjPage', 
+            {
+              roomId,
+              currentUser,
+              holdArray
+            });
           })
           .catch((err) => {
             console.log(err);
