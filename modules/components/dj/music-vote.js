@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import downVote from './../../../assets/pictures/DOWN.png';
 import upVote from './../../../assets/pictures/UP.png';
 
