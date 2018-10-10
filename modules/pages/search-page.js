@@ -25,15 +25,6 @@ class SearchPage extends Component {
   }
 
   selectVideo = (video) => {
-    // Check if video selected was already added
-    const isAlreadyThere = myVideoList.indexOf(video);
-    // Not added, then push into the array
-    if (isAlreadyThere === -1) {
-      this.setState({
-        myVideoList: [...myVideoList,video]
-      })
-      const data = this.state.myVideoList;
-
       // Call the back to update DBS
       fetch('url', {
         method: 'POST',
@@ -44,14 +35,12 @@ class SearchPage extends Component {
         console.log(info)
       })
     }
-  }
 
   render() {
     const searchedVideos = this.state.searchVideos;
     return (
-      <View>
+      <View style={styles.container}>>
         <SearchBar
-          onSearchChange={this.videoSearch}
         />
         <View>
           <VideoList 
@@ -62,5 +51,21 @@ class SearchPage extends Component {
     );
   }
 }
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+    alignSelf: "stretch",
+    justifyContent: "flex-start",
+    margin: 10,
+    paddingTop: 60,
+    backgroundColor: "yellow"
+  },
+  inputPlace: {
+    padding: 20,
+    backgroundColor: 'green',
+    alignSelf: "stretch"
+  },
+  
 export default SearchPage;

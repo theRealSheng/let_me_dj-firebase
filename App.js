@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
-// import SearchPage from './modules/pages/search-page';
-// import DjPage from './modules/pages/dj-page';
+import {Platform, StyleSheet, Text, View, AsyncStorage} from 'react-native';
+import SearchPage from './modules/pages/search-page';
 import Auth from './modules/pages/auth';
 import JoinRoom from './modules/pages/join-room';
 import DjPage from './modules/pages/dj-page';
@@ -75,6 +74,10 @@ class HomeScreen extends Component {
       <View style={styles.container}>
         <Text>Welcome Dj!</Text>
         <Auth onSubmitUser={this.onSubmitNewUser} />
+        <Text> Dj!</Text>
+        {/* <Auth onSubmitUser={this.onSubmitNewUser} />
+        <JoinRoom></JoinRoom> */}
+            <SearchPage />
       </View>
     );
   }
