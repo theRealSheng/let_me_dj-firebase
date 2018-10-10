@@ -7,10 +7,13 @@
     "test": "jest"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "firebase": "^5.5.3",
     "react": "16.5.0",
     "react-native": "0.57.2",
     "react-native-form": "^2.1.3",
     "react-native-youtube": "^1.1.0",
+    "react-navigation": "^2.17.0",
     "youtube-api-search": "0.0.5"
   },
   "devDependencies": {
