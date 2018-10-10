@@ -20,12 +20,14 @@ class JoinRoom extends Component {
 
     this.state = {
       currentUser: this.props.navigation.getParam('currentUser', ''),
+      currentUserName: this.props.navigation.getParam('currentUserName','');
     };
   }
   
 
   onPressCreate = () => {
     const currentUser = this.state.currentUser;
+    const currentUserName = this.state.currentUserName;
     const room = this.state.newRoom;
     let holdArray = []
 
@@ -34,7 +36,11 @@ class JoinRoom extends Component {
     firebase.database().ref(`room/${room}`)
       .set({people: holdArray})
       .then((result) => {
-        this.props.navigation.navigate('DjPage', { room, currentUser });
+        this.props.navigation.navigate('DjPage', {
+          room,
+          currentUser,
+          currentUserNamecurrentUserName
+        });
       })
       .catch((err) => {
         console.log(err);

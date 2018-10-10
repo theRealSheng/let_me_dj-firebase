@@ -14,6 +14,7 @@ class DjPage extends Component {
 
     this.state = {
       currentUser: this.props.navigation.getParam('currentUser', ''),
+      currentUserName: this.props.navigation.getParam('currentUserName', ''),
       roomId: this.props.navigation.getParam('roomId', ''),
       roomPeople: this.props.navigation.getParam('holdArray', ''),
     }

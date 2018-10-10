@@ -13,7 +13,8 @@ class HomeScreen extends Component {
   };
 
   state = {
-    currentUser: ''
+    currentUser: '',
+    currentUserName: ''
   }
 
   componentDidMount() {
@@ -60,8 +61,15 @@ class HomeScreen extends Component {
       const result = await firebase.database().ref('users').push({ name })
     
       if (result) {
-        this.setState({currentUser: result.key});
-        this.props.navigation.navigate('Join', { currentUser: this.state.currentUser})
+        const currentUser = result.key;
+        this.setState({currentUser});
+        const userId = result.key;
+        firebase.database().ref(`user/${userId}`)
+          .once('value', (data) => {
+            const currentUserName = data.toJSON().name;
+            this.setState({currentUserName})
+            this.props.navigation.navigate('Join', { currentUser, currentUserName })
+          })
       }
 
     } catch(err) {
@@ -74,10 +82,6 @@ class HomeScreen extends Component {
       <View style={styles.container}>
         <Text>Welcome Dj!</Text>
         <Auth onSubmitUser={this.onSubmitNewUser} />
-        <Text> Dj!</Text>
-        {/* <Auth onSubmitUser={this.onSubmitNewUser} />
-        <JoinRoom></JoinRoom> */}
-            <SearchPage />
       </View>
     );
   }
@@ -89,6 +93,7 @@ export default createStackNavigator(
    Home: { screen: HomeScreen },
    Join: { screen: JoinRoom },
    DjPage: { screen: DjPage },
+   SearchPage: { screen: SearchPage },
  },
  {
    initialRouteName: 'Home',
