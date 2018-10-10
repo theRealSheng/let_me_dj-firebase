@@ -7,6 +7,7 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
+import DjPage from './modules/pages/dj-page';
 // https://github.com/julianocomg/react-native-form
 
 const instructions = Platform.select({
@@ -21,6 +22,7 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
       <SearchPage></SearchPage>
+      {/* <DjPage></DjPage> */}
       </View>
     );
   }
