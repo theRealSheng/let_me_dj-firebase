@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, AsyncStorage} from 'react-native';
-// import SearchPage from './modules/pages/search-page';
+import SearchPage from './modules/pages/search-page';
 // import DjPage from './modules/pages/dj-page';
 import Auth from './modules/pages/auth';
 import JoinRoom from './modules/pages/join-room';
@@ -68,9 +68,10 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Welcome Dj!</Text>
-        <Auth onSubmitUser={this.onSubmitNewUser} />
-        <JoinRoom></JoinRoom>
+        <Text> Dj!</Text>
+        {/* <Auth onSubmitUser={this.onSubmitNewUser} />
+        <JoinRoom></JoinRoom> */}
+            <SearchPage />
       </View>
     );
   }

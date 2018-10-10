@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TextInput } from 'react-native';
+import { View, TextInput, StyleSheet } from 'react-native';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -13,10 +13,22 @@ class SearchBar extends Component {
         <TextInput
           value={this.state.term}
           onChangeText={(term) => this.props.onSearchChange(term)}
+          style={styles.textInput}
         />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  textInput: {
+    borderColor: 'blue',
+    borderWidth: .5,
+    width: 100,
+    borderRadius: 5,
+    padding: 10,
+    marginTop: 10,
+  }
+});
 
 export default SearchBar;

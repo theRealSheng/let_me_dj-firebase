@@ -25,15 +25,6 @@ class SearchPage extends Component {
   }
 
   selectVideo = (video) => {
-    // Check if video selected was already added
-    const isAlreadyThere = myVideoList.indexOf(video);
-    // Not added, then push into the array
-    if (isAlreadyThere === -1) {
-      this.setState({
-        myVideoList: [...myVideoList,video]
-      })
-      const data = this.state.myVideoList;
-
       // Call the back to update DBS
       fetch('url', {
         method: 'POST',
@@ -44,7 +35,6 @@ class SearchPage extends Component {
         console.log(info)
       })
     }
-  }
 
   render() {
     const searchedVideos = this.state.searchVideos;
