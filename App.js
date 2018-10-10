@@ -1,12 +1,17 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, AsyncStorage} from 'react-native';
+import {Platform, StyleSheet, Text, View} from 'react-native';
 // import SearchPage from './modules/pages/search-page';
 // import DjPage from './modules/pages/dj-page';
 import Auth from './modules/pages/auth';
 import JoinRoom from './modules/pages/join-room';
+import DjPage from './modules/pages/dj-page';
 import firebase from 'firebase';
+import { createStackNavigator } from "react-navigation";
 
-export default class App extends Component {
+class HomeScreen extends Component {
+  static navigationOptions = {
+    title: 'Home',
+  };
 
   state = {
     currentUser: ''
@@ -51,18 +56,18 @@ export default class App extends Component {
   //   firebase.database().ref('users/004/name').remove()
     }
 
-  onSubmitNewUser = (name) => {
-    firebase.database().ref('users')
-      .push({ name })
-      .then((result) => {
-        AsyncStorage.setItem('currentUser', 'result.key');
-        this.setState({currentUser: result.key})
-        // REroute to join Room page
-        alert('added new user');
-      })
-      .catch((err) => {
-        console.log(err);
-      }) 
+  onSubmitNewUser = async (name) => {
+    try {
+      const result = await firebase.database().ref('users').push({ name })
+    
+      if (result) {
+        this.setState({currentUser: result.key});
+        this.props.navigation.navigate('Join', { currentUser: this.state.currentUser})
+      }
+
+    } catch(err) {
+      console.log(err);
+    }
   }
 
   render() {
@@ -70,11 +75,22 @@ export default class App extends Component {
       <View style={styles.container}>
         <Text>Welcome Dj!</Text>
         <Auth onSubmitUser={this.onSubmitNewUser} />
-        <JoinRoom></JoinRoom>
       </View>
     );
   }
 }
+
+// This is our "App" component
+export default createStackNavigator(
+ {
+   Home: { screen: HomeScreen },
+   Join: { screen: JoinRoom },
+   DjPage: { screen: DjPage },
+ },
+ {
+   initialRouteName: 'Home',
+ },
+);
 
 const styles = StyleSheet.create({
   container: {
