@@ -4,8 +4,6 @@ import YTSearch from 'youtube-api-search'
 import SearchBar from '../components/search/search-bar';
 import VideoList from '../components/search/video-list';
 
-
-
 class SearchPage extends Component {
   constructor(props) {
     super(props);
@@ -15,7 +13,6 @@ class SearchPage extends Component {
       myVideoList: [],
       selectedVideo: null
     }
-    searchVideos = this.state.searchVideos;
   }
 
   videoSearch = (term) => {
@@ -36,6 +33,7 @@ class SearchPage extends Component {
       })
       const data = this.state.myVideoList;
 
+      // Call the back to update DBS
       fetch('url', {
         method: 'POST',
         body: JSON.stringify(data),
@@ -48,15 +46,17 @@ class SearchPage extends Component {
   }
 
   render() {
+    const searchedVideos = this.state.searchVideos;
     return (
       <View>
         <SearchBar
           onSearchChange={this.videoSearch}
         />
-        <VideoList 
-          onVideoSelect={this.selectVideo}
-          searchVideos>
-        </VideoList>
+        <View>
+          <VideoList 
+            onVideoSelect={this.selectVideo}
+            videos={searchedVideos} />
+        </View>
       </View>
     );
   }
