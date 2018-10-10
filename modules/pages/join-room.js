@@ -26,30 +26,15 @@ class JoinRoom extends Component {
 
   onPressCreate = () => {
     const currentUser = this.state.currentUser;
-    const room = this.state.room;
-    
+    const room = this.state.newRoom;
+    let holdArray = []
+
+    holdArray.push(currentUser);
+
     firebase.database().ref(`room/${room}`)
-      .set({people: currentUser})
+      .set({people: holdArray})
       .then((result) => {
         this.props.navigation.navigate('DjPage', { room, currentUser });
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-  };
-
-  onChangesRoom = (room) => {
-    this.setState({room});
-  };
-
-  onPressJoin = () => {
-    // POST to Join
-    firebase.database().ref('currentID')
-      .push(this.state.text)
-      .then((result) => {
-        this.setState({currentUser: result.key})
-        // REroute to Room page
-        alert('Joined new room');
       })
       .catch((err) => {
         console.log(err);
@@ -59,6 +44,39 @@ class JoinRoom extends Component {
   onChangesNewRoom = (newRoom) => {
    this.setState({newRoom})
   };
+
+  onPressJoin = () => {
+    const currentUser = this.state.currentUser;
+    const room = this.state.room;
+    return firebase.database().ref(`room/${room}`)
+      .on('value', (data) => {
+        const oldPeople = data.toJSON().people;
+        let holdArray = [];
+
+        for(let people in oldPeople) {
+          if (holdArray.indexOf(oldPeople[people]) === -1) {
+            holdArray.push(oldPeople[people]);
+          }
+        }
+
+        holdArray.push(currentUser);
+
+        return firebase.database().ref(`room/${room}`)
+          .update({ people: holdArray })
+          .then((result) => {
+            this.props.navigation.navigate('DjPage', { room, currentUser });
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      })
+  };
+
+  onChangesRoom = (room) => {
+    this.setState({room});
+  };
+
+
 
  render() {
    return (
@@ -71,8 +89,8 @@ class JoinRoom extends Component {
 
        <View style={styles.inputPlace}>
          <TextInput
-           onChangeText={(text) => this.onChangesRoom(text)}
-           value={this.state.room}
+           onChangeText={(text) => this.onChangesNewRoom(text)}
+           value={this.state.newRoom}
            maxLength={4}
            style={styles.input}
            autoCapitalize="characters"
@@ -83,14 +101,14 @@ class JoinRoom extends Component {
 
        <View style={styles.inputPlace}>
          <TextInput
-          onChangeText={(text) => this.onChangesNewRoom(text)}
-           value={this.state.newRoom}
+          onChangeText={(text) => this.onChangesRoom(text)}
+           value={this.state.room}
            maxLength={4}
            style={styles.input}
            autoCapitalize="characters"
            placeholder={"Join Room"}
          />
-         <Button onPress={() => this.props.onPressJoin} title={"Join"} />
+         <Button onPress={this.onPressJoin} title={"Join"} />
        </View>
      </View>
    );
