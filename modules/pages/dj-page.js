@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import MusicVote from './../components/dj/music-vote';
 
 class DjPage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-     chatRoom: ''
+     chatRoom: '',
+     user: ''
     }
   }
 
@@ -22,12 +24,18 @@ class DjPage extends Component {
       })
   }
 
-  render() {
-    return (
-      <View>
 
-      </View>
-    );
+  render() {
+    const roomDj = this.state.chatRoom.djs;
+    const isDj = roomDj.indexOf(user);
+
+    if (isDj === -1) {
+      return (
+        <View>
+          <MusicVote onVote={this.submitVote}/>
+        </View>
+      );
+    }
   }
 }
 
