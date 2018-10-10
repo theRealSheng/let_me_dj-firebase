@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import DjSeat from './../components/dj/dj-seat';
+import { View, Text } from 'react-native';
 import firebase from 'firebase';
+import MusicVote from './../components/dj/music-vote';
 import { createStackNavigator } from "react-navigation";
-
 
 class DjPage extends Component {
   static navigationOptions = {
@@ -14,33 +13,38 @@ class DjPage extends Component {
     super(props);
 
     this.state = {
-      currentUser: JSON.stringify(this.props.navigation.getParam('currentUser', '')),
-      roomId: JSON.stringify(this.props.getParam('room', '')),
-      roomPeople: ''
+      currentUser: this.props.navigation.getParam('currentUser', ''),
+      roomId: this.props.navigation.getParam('roomId', ''),
+      roomPeople: this.props.navigation.getParam('holdArray', ''),
     }
   }
 
-  // check if it works
-  componentDidlMount() {
-    const roomId = this.state.roomId;
-    firebase.database().ref(`room/${roomId}`).on('value', (data) => {
-      this.setState({roomPeople: data.people});
-    })
+  componentDidMount() {
+    this.props.navigation.addListener(
+      'willFocus',
+      () => firebase.database().ref(`room/${roomId}`)
+        .on('value', (data) => {
+          const oldPeople = data.toJSON().people;
+          let holdArray = [];
+
+          for (let people in oldPeople) {
+            if (holdArray.indexOf(oldPeople[people]) === -1) {
+              holdArray.push(oldPeople[people]);
+            }
+          }
+
+          this.setState({ roomPeople: holdArray })
+        }),
+    );
   }
 
-
   render() {
-    // const roomDj = this.state.chatRoom.djs;
-    // const currentUser = this.state.currentUser;
-    // const isDj = roomDj.indexOf(currentUser);
-
-    // if (isDj === -1) {
     return (
       <View>
-          <DjSeat />
+        <Text>Hello</Text>
+        <MusicVote />
       </View>
     );
-    // }
   }
 }
 
