@@ -14,11 +14,8 @@ class VideoItem extends Component {
           />
         </View>
         <View>
-          <Text style={{fontSize:30}}>{this.props.video.snippet.title}</Text>
+          <Text style={styles.containerText}>{this.props.video.snippet.title}</Text>
         </View>
-        {/*<View style={styles.text}>
-          <Text style={styles.text}>{this.props.video.snippet.title}</Text>
-    </View>*/}
       </View>
     );
   }
@@ -29,10 +26,10 @@ const styles = StyleSheet.create({
     margin: 10,
     alignItems: 'center',
   },
-  text: {
+  containerText: {
     padding: 10,
     marginTop: 10,
-    fontSize: 25
+    fontSize: 25,
   }
 });
 

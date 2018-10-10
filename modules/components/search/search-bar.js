@@ -53,6 +53,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
     alignSelf: "stretch"
   },
+  input: {
+    height: 50,
+    alignSelf: "stretch",
+    alignContent: "center",
+    fontSize: 20
+  },
  
 
 });
