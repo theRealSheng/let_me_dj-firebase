@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import VideoItem from './video-item';
 
 class VideoList extends Component {
@@ -19,13 +19,21 @@ class VideoList extends Component {
     });
     
     return (
-      <View>
+      <View style={styles.Container}>
         <ScrollView>
           {videoItems}
         </ScrollView>
       </View>
     );
   }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 }
 
 export default VideoList;
