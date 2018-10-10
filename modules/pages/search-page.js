@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import YTSearch from 'youtube-api-search'
 import SearchBar from '../components/search/search-bar';
 import VideoList from '../components/search/video-list';
@@ -39,7 +39,7 @@ class SearchPage extends Component {
   render() {
     const searchedVideos = this.state.searchVideos;
     return (
-      <View style={styles.container}>>
+      <View style={styles.container}>
         <SearchBar
         />
         <View>
@@ -67,5 +67,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
     alignSelf: "stretch"
   },
-  
+})
+
 export default SearchPage;
