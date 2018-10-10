@@ -64,7 +64,7 @@ class HomeScreen extends Component {
         const currentUser = result.key;
         this.setState({currentUser});
         const userId = result.key;
-        firebase.database().ref(`user/${userId}`)
+        firebase.database().ref(`users/${userId}`)
           .once('value', (data) => {
             const currentUserName = data.toJSON().name;
             this.setState({currentUserName})
