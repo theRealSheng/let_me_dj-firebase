@@ -4,11 +4,15 @@ import {Platform, StyleSheet, Text, View} from 'react-native';
 // import DjPage from './modules/pages/dj-page';
 import Auth from './modules/pages/auth';
 import firebase from 'firebase';
-import conf from './global'
+// import conf from './global'
 
 export default class App extends Component {
 
-  componentWillmount() {
+  state = {
+    currentUser: ''
+  }
+
+  componentDidMount() {
     var config = {
       apiKey: "AIzaSyDiROfE0E83mxIz2V3CDUsMmi0pO4u2lLc",
       authDomain: "let-me-dj.firebaseapp.com",
@@ -20,7 +24,7 @@ export default class App extends Component {
 
     firebase.initializeApp(config);
 
-  //   console.log(firebase);
+    console.warn(firebase);
 
   //   // Create data
   //   firebase.database().ref('users/001').set(
@@ -50,13 +54,16 @@ export default class App extends Component {
     }
 
   onSubmitNewUser = (name) => {
-    firebase.database().ref('users').push({name})
-    .then(() => {
-      alert('added new user');
-    })
-    .catch((err) => {
-      console.log(err);
-    }) 
+    firebase.database().ref('users')
+      .push({ name })
+      .then((result) => {
+        this.setState({currentUser: result.key})
+        // REroute to join Room page
+        alert('added new user');
+      })
+      .catch((err) => {
+        console.log(err);
+      }) 
   }
 
   render() {
