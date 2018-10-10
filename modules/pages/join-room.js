@@ -6,55 +6,59 @@ import {
   Text,
   TextInput,
   Platform,
-  AsyncStorage
 } from "react-native";
 import firebase from 'firebase';
+import { createStackNavigator } from "react-navigation";
 
 class JoinRoom extends Component {
+  static navigationOptions = {
+    title: "Rooms"
+  };
 
- state = {
-   currentUser: '',
-   room: ''
- }
+  constructor(props){
+    super(props)
 
- async componentDidMount() {
-   this.state.currentUser = await AsyncStorage.getItem('currenUser');
- }
+    this.state = {
+      currentUser: this.props.navigation.getParam('currentUser', ''),
+    };
+  }
+  
 
- onPressCreate = () => {
-   const currentUser = this.state.currentUser;
-   const room = this.state.text;
+  onPressCreate = () => {
+    const currentUser = this.state.currentUser;
+    const room = this.state.room;
+    
+    firebase.database().ref(`room/${room}`)
+      .set({people: currentUser})
+      .then((result) => {
+        this.props.navigation.navigate('DjPage', { room, currentUser });
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  };
 
-   firebase.database().ref('roomID')
-     .set({room: room, people: currentUser})
-     .then((result) => {
-       console.log('THE ROOM RESULT IS...', result);
-       this.setState({room: result.key})
-       // REroute to create and go to Room page
-       alert('Created new room');
-     })
-     .catch((err) => {
-       console.log(err);
-     })
- }
+  onChangesRoom = (room) => {
+    this.setState({room});
+  };
 
- onChangesRoom = (room) => {
-   this.setState({room})
- }
+  onPressJoin = () => {
+    // POST to Join
+    firebase.database().ref('currentID')
+      .push(this.state.text)
+      .then((result) => {
+        this.setState({currentUser: result.key})
+        // REroute to Room page
+        alert('Joined new room');
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  };
 
- onPressJoin() {
-   // POST to Join
-   firebase.database().ref('currentID')
-     .push(this.state.text)
-     .then((result) => {
-       this.setState({currentUser: result.key})
-       // REroute to Room page
-       alert('Joined new room');
-     })
-     .catch((err) => {
-       console.log(err);
-     })
- }
+  onChangesNewRoom = (newRoom) => {
+   this.setState({newRoom})
+  };
 
  render() {
    return (
@@ -74,18 +78,19 @@ class JoinRoom extends Component {
            autoCapitalize="characters"
            placeholder={"Create a Room"}
          />
-         <Button onPress={() => this.onPressCreate} title={"Create"} />
+         <Button onPress={this.onPressCreate} title={"Create"} />
        </View>
 
        <View style={styles.inputPlace}>
          <TextInput
-           value={this.state.room}
+          onChangeText={(text) => this.onChangesNewRoom(text)}
+           value={this.state.newRoom}
            maxLength={4}
            style={styles.input}
            autoCapitalize="characters"
            placeholder={"Join Room"}
          />
-         <Button onPress={() => this.props.onPressCreate()} title={"Join"} />
+         <Button onPress={() => this.props.onPressJoin} title={"Join"} />
        </View>
      </View>
    );
