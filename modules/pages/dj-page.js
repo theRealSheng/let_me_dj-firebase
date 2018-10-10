@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import MusicVote from './../components/dj/music-vote';
+import DjSeat from './../components/dj/dj-seat';
 
 class DjPage extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-     chatRoom: '',
-     user: ''
-    }
+    // this.state = {
+    //  roomDjs: '',
+    //  roomCode: '',
+    //  currentUser: ''
+    // }
   }
 
   // check if it works
@@ -17,7 +18,7 @@ class DjPage extends Component {
     fetch('url')
       .then(() => res.json())
       .then((chatRoom) => {
-        this.setState({chatRoom})
+        // this.setState({chatRoom})
       })
       .catch((err) => {
         console.log(err.message);
@@ -26,16 +27,17 @@ class DjPage extends Component {
 
 
   render() {
-    const roomDj = this.state.chatRoom.djs;
-    const isDj = roomDj.indexOf(user);
+    // const roomDj = this.state.chatRoom.djs;
+    // const currentUser = this.state.currentUser;
+    // const isDj = roomDj.indexOf(currentUser);
 
-    if (isDj === -1) {
-      return (
-        <View>
-          <MusicVote onVote={this.submitVote}/>
-        </View>
-      );
-    }
+    // if (isDj === -1) {
+    return (
+      <View>
+          <DjSeat />
+      </View>
+    );
+    // }
   }
 }
 
