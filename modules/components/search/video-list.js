@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import VideoItem from './video-item';
 
 class VideoList extends Component {
@@ -20,7 +20,9 @@ class VideoList extends Component {
     
     return (
       <View>
-        {videoItems}
+        <ScrollView>
+          {videoItems}
+        </ScrollView>
       </View>
     );
   }
