@@ -7,3 +7,5 @@ var config = {
   storageBucket: "let-me-dj.appspot.com",
   messagingSenderId: "59693446433"
 };
+
+export default config;

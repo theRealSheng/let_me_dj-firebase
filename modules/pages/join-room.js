@@ -5,10 +5,11 @@ import {
   Button,
   Text,
   TextInput,
-  TouchableOpacity,
-  Platform
+  Platform,
+  AsyncStorage
 } from "react-native";
-import User from "./user";
+import firebase from 'firebase';
+import config from './global';
 
 const instructions = Platform.select({
   ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
@@ -18,41 +19,51 @@ const instructions = Platform.select({
 });
 
 export default class joinRoom extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { words: [] };
-    this.inputRef = React.createRef();
-    this.inputText = "";
+
+  state = {
+    currentUser: '',
+    room: ''
   }
 
-  onPressButton() {
-    // POST to Create
-    console.log(this.state.text);
-    axios
-      .post("server_url/route", {
-        createRoom: this.state.text
+  async componentDidMount() {
+
+    firebase.initializeApp(config);
+
+    this.state.currentUser = await AsyncStorage.getItem('currenUser');
+    }
+
+    onPressCreate = () => {
+      const currentUser = this.state.currentUser;
+      const room = this.state.text;
+
+    firebase.database().ref('roomID')
+      .set({room: room, people: currentUser})
+      .then((result) => {
+        console.log(result);
+        this.setState({room: result.key})
+        // REroute to create and go to Room page
+        alert('Created new room');
       })
-      .then(function(response) {
-        console.log(response);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+      .catch((err) => {
+        console.log(err);
+      }) 
+  }
+  onChangesRoom = (room) => {
+    this.setState({room})
   }
 
-  onClickButton() {
+  onPressJoin() {
     // POST to Join
-    console.log(this.state.text);
-    axios
-      .post("server_url/route", {
-        joinRoom: this.state.text
+    firebase.database().ref('currentID')
+      .push(this.state.text)
+      .then((result) => {
+        this.setState({currentUser: result.key})
+        // REroute to Room page
+        alert('Joined new room');
       })
-      .then(function(response) {
-        console.log(response);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+      .catch((err) => {
+        console.log(err);
+      }) 
   }
 
   render() {
@@ -66,24 +77,25 @@ export default class joinRoom extends Component {
 
         <View style={styles.inputPlace}>
           <TextInput
-            value={this.state.text}
+            onChangeText={(text) => this.onChangesRoom(text)}
+            value={this.state.room}
             maxLength={4}
             style={styles.input}
             autoCapitalize="characters"
             placeholder={"Create a Room"}
           />
-          <Button onPress={() => this.send.onPressButton()} title={"Create"} />
+          <Button onPress={() => this.onPressCreate} title={"Create"} />
         </View>
 
         <View style={styles.inputPlace}>
           <TextInput
-            value={this.state.text}
+            value={this.state.room}
             maxLength={4}
             style={styles.input}
             autoCapitalize="characters"
             placeholder={"Join Room"}
           />
-          <Button onPress={() => this.send.onClickButton()} title={"Join"} />
+          <Button onPress={() => this.props.onPressCreate()} title={"Join"} />
         </View>
       </View>
     );
