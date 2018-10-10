@@ -55,6 +55,7 @@ export default class joinRoom extends Component {
               this.inputText = text;
             }}
             style={styles.input}
+            autoCapitalize="characters"
             placeholder={"Create a Room"}
           />
           <Button title={"Create"} onPress={this.onPressButton.bind(this)} />
@@ -72,6 +73,7 @@ export default class joinRoom extends Component {
               this.inputText = text;
             }}
             style={styles.input}
+            autoCapitalize="characters"
             placeholder={"Join Room"}
           />
           <Button title={"Join"} onPress={this.onClickButton.bind(this)} />
