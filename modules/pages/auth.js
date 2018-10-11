@@ -20,14 +20,13 @@ class Auth extends Component {
   render() {
     return (
       <View>
-        <Text>Your Name</Text>
         <TextInput 
             onChangeText={(name) => this.onChangeName(name)}
             placeHolder="Your name"
             style={styles.input}
             />
         <Button 
-        title={"Create"} 
+        title={"Enter"} 
         onPress={this.onSubmitName} />
       </View>
     );
