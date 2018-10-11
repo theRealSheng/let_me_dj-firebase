@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
 import firebase from 'firebase';
 import MusicVote from './../components/dj/music-vote';
 import { createStackNavigator } from "react-navigation";
@@ -21,6 +21,7 @@ class DjPage extends Component {
   }
 
   componentDidMount() {
+    const roomId = this.state.roomId;
     this.props.navigation.addListener(
       'willFocus',
       () => firebase.database().ref(`room/${roomId}`)
@@ -39,11 +40,22 @@ class DjPage extends Component {
     );
   }
 
+  navigateToSearchPage() {
+    this.props.navigation.navigate('SearchPage');
+  }
+
   render() {
     return (
       <View>
-        <Text>Hello</Text>
-        <MusicVote />
+        <View>
+          <Text>Hello</Text>
+        </View>
+        <View>
+          <MusicVote />
+        </View>
+        <View>
+          <Button onPress={this.navigateToSearchPage}>Search Songs</Button>
+        </View>
       </View>
     );
   }
