@@ -68,6 +68,7 @@ class HomeScreen extends Component {
           .once('value', (data) => {
             const currentUserName = data.toJSON().name;
             this.setState({currentUserName})
+            console.log(currentUserName);
             this.props.navigation.navigate('Join', { currentUser, currentUserName })
           })
       }
@@ -80,8 +81,12 @@ class HomeScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Welcome Dj!</Text>
-        <Auth onSubmitUser={this.onSubmitNewUser} />
+        <View style={styles.text_container}>
+          <Text style={styles.text}>Your DJ name</Text>
+        </View>
+        <View>
+          <Auth onSubmitUser={this.onSubmitNewUser} />
+        </View>
       </View>
     );
   }
@@ -103,13 +108,13 @@ export default createStackNavigator(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
+    paddingTop: 200
   },
-  welcome: {
+  text: {
     fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+    marginRight: 10
   },
   instructions: {
     textAlign: 'center',

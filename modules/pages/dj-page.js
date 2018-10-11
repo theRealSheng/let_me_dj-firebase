@@ -54,7 +54,7 @@ class DjPage extends Component {
           <MusicVote />
         </View>
         <View>
-          <Button onPress={this.navigateToSearchPage}>Search Songs</Button>
+          <Button onPress={this.navigateToSearchPage} title={'Search Songs'} />
         </View>
       </View>
     );

@@ -27,25 +27,7 @@ class JoinRoom extends Component {
   }
 
   onPressCreate = () => {
-    const currentUser = this.state.currentUser;
-    const currentUserName = this.state.currentUserName;
-    const room = this.state.newRoom;
-    let holdArray = []
-
-    holdArray.push(currentUser);
-
-    firebase.database().ref(`room/${room}`)
-      .set({people: holdArray})
-      .then((result) => {
-        this.props.navigation.navigate('DjPage', {
-          room,
-          currentUser,
-          currentUserNamecurrentUserName
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+    this.createNewRoom();
   };
 
   onChangesNewRoom = (newRoom) => {
@@ -54,37 +36,68 @@ class JoinRoom extends Component {
 
   onPressJoin = () => {
     const currentUser = this.state.currentUser;
+    const currentUserName = this.state.currentUserName;
     const roomId = this.state.room;
     console.log(roomId);
     firebase.database().ref(`room/${roomId}`)
       .once('value', (data) => {
-        const oldPeople = data.toJSON().people;
-        let holdArray = [];
-
-        for(let people in oldPeople) {
-          if (holdArray.indexOf(oldPeople[people]) === -1) {
-            holdArray.push(oldPeople[people]);
+        if (data) {
+          const oldPeople = data.toJSON().people;
+          let holdArray = [];
+  
+          for(let people in oldPeople) {
+            if (holdArray.indexOf(oldPeople[people]) === -1) {
+              holdArray.push(oldPeople[people]);
+            }
           }
+  
+          holdArray.push(currentUser);
+  
+          firebase.database().ref(`room/${roomId}`)
+            .update({ people: holdArray })
+            .then((result) => {
+              console.log(roomId);
+              this.props.navigation.navigate('DjPage', 
+              {
+                roomId,
+                currentUser,
+                holdArray,
+                currentUserName
+              });
+            })
+            .catch((err) => {
+              console.log(err);
+            })
         }
-
-        holdArray.push(currentUser);
-
-        firebase.database().ref(`room/${roomId}`)
-          .update({ people: holdArray })
-          .then((result) => {
-            console.log(roomId);
-            this.props.navigation.navigate('DjPage', 
-            {
-              roomId,
-              currentUser,
-              holdArray
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-          })
+        else {
+          this.createNewRoom();
+        }
       })
   };
+
+  createNewRoom = () => {
+    const currentUser = this.state.currentUser;
+    const currentUserName = this.state.currentUserName;
+    const room = this.state.newRoom;
+    let holdArray = []
+
+    holdArray.push(currentUser);
+
+    firebase.database().ref(`room/${room}`)
+      .set({
+        people: holdArray
+      })
+      .then((result) => {
+        this.props.navigation.navigate('DjPage', {
+          room,
+          currentUser,
+          currentUserName
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
 
   onChangesRoom = (room) => {
     this.setState({room});
@@ -94,14 +107,14 @@ class JoinRoom extends Component {
    return (
      <View style={styles.container}>
        <View>
-        <Text style={styles.headerText}>Welcome {this.props.currentUserName}!</Text>
+        <Text style={styles.headerText}>Welcome {this.state.currentUserName}!</Text>
        </View>
+
        <View>
         <Text style={styles.dialogText}>
           Create a room or join existing one!
         </Text>
        </View>
-       <Text style={styles.dialogText}>Enter four digits</Text>
 
        <View style={styles.inputPlace}>
          <TextInput
@@ -110,7 +123,7 @@ class JoinRoom extends Component {
            maxLength={4}
            style={styles.input}
            autoCapitalize="characters"
-           placeholder={"Create a Room"}
+           placeholder={"4 Diggit.."}
          />
          <Button onPress={this.onPressCreate} title={"Create"} />
        </View>
@@ -122,7 +135,7 @@ class JoinRoom extends Component {
            maxLength={4}
            style={styles.input}
            autoCapitalize="characters"
-           placeholder={"Join Room"}
+           placeholder={"4 Diggit..."}
          />
          <Button onPress={this.onPressJoin} title={"Join"} />
        </View>
@@ -144,12 +157,12 @@ const styles = StyleSheet.create({
  },
  inputPlace: {
    padding: 20,
-   alignSelf: "stretch"
+   alignItems: "center",
  },
 
  input: {
    height: 50,
-   alignSelf: "stretch",
+   width: 100,
    alignContent: "center",
    fontSize: 20
  },

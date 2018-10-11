@@ -13,12 +13,12 @@ class MusicVote extends Component {
       <View style={styles.container}>
         <View onClick={() => this.props.onVote('down')}>
           <Image 
-            style={{width: 300, height: 200}}
+            style={styles.img}
              source={downVote} />
         </View>
         <View onClick={() => this.props.onVote('up')}> 
           <Image  
-            style={{width: 300, height: 200}}
+            style={styles.img}
             source={upVote} />
         </View>
       </View>
@@ -28,10 +28,11 @@ class MusicVote extends Component {
 
 const styles = StyleSheet.create({
   container: {
-
+    flexDirection: 'row',
   },
-  spot: {
-
+  img: {
+    width: 30,
+    height: 30
   }
 })
 

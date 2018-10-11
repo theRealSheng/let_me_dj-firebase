@@ -40,8 +40,9 @@ class SearchPage extends Component {
     const searchedVideos = this.state.searchVideos;
     return (
       <View style={styles.container}>
-        <SearchBar
-        />
+        <View>
+          <SearchBar/>
+        </View>
         <View>
           <VideoList 
             onVideoSelect={this.selectVideo}
@@ -51,6 +52,7 @@ class SearchPage extends Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
