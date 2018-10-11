@@ -20,10 +20,11 @@ class JoinRoom extends Component {
 
     this.state = {
       currentUser: this.props.navigation.getParam('currentUser', ''),
-      currentUserName: this.props.navigation.getParam('currentUserName','');
+      currentUserName: this.props.navigation.getParam('currentUserName',''),
+      room: '',
+      newRoom: '',
     };
   }
-  
 
   onPressCreate = () => {
     const currentUser = this.state.currentUser;
@@ -54,7 +55,8 @@ class JoinRoom extends Component {
   onPressJoin = () => {
     const currentUser = this.state.currentUser;
     const roomId = this.state.room;
-    return firebase.database().ref(`room/${roomId}`)
+    console.log(roomId);
+    firebase.database().ref(`room/${roomId}`)
       .once('value', (data) => {
         const oldPeople = data.toJSON().people;
         let holdArray = [];
@@ -67,9 +69,10 @@ class JoinRoom extends Component {
 
         holdArray.push(currentUser);
 
-        return firebase.database().ref(`room/${roomId}`)
+        firebase.database().ref(`room/${roomId}`)
           .update({ people: holdArray })
           .then((result) => {
+            console.log(roomId);
             this.props.navigation.navigate('DjPage', 
             {
               roomId,
@@ -87,15 +90,17 @@ class JoinRoom extends Component {
     this.setState({room});
   };
 
-
-
  render() {
    return (
      <View style={styles.container}>
-       <Text style={styles.headerText}>Let Me DJ!</Text>
-       <Text style={styles.dialogText}>
-         Create a room or join existing one!
-       </Text>
+       <View>
+        <Text style={styles.headerText}>Welcome {this.props.currentUserName}!</Text>
+       </View>
+       <View>
+        <Text style={styles.dialogText}>
+          Create a room or join existing one!
+        </Text>
+       </View>
        <Text style={styles.dialogText}>Enter four digits</Text>
 
        <View style={styles.inputPlace}>
