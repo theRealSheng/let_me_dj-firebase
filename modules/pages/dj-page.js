@@ -40,9 +40,6 @@ class DjPage extends Component {
     );
   }
 
-  navigateToSearchPage() {
-    this.props.navigation.navigate('SearchPage');
-  }
 
   render() {
     return (
@@ -54,7 +51,9 @@ class DjPage extends Component {
           <MusicVote />
         </View>
         <View>
-          <Button onPress={this.navigateToSearchPage} title={'Search Songs'} />
+          <Button 
+          onPress={() => this.props.navigation.navigate('SearchPage')} 
+          title={'Search Songs'} />
         </View>
       </View>
     );

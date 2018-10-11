@@ -10,7 +10,6 @@ class VideoItem extends Component {
           <Image
             style={{ width: 300, height: 200 }}
             source={{ uri: imageURL }}
-            
           />
         </View>
         <View>

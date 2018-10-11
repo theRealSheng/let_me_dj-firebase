@@ -18,6 +18,7 @@ class SearchPage extends Component {
 
   videoSearch = (term) => {
     YTSearch({ key: API_KEY, term: term }, (videos) => {
+      console.log(videos);
       this.setState({
         searchVideos: videos
       });
@@ -41,7 +42,7 @@ class SearchPage extends Component {
     return (
       <View style={styles.container}>
         <View>
-          <SearchBar/>
+          <SearchBar onSearchChange={this.videoSearch}/>
         </View>
         <View>
           <VideoList 
@@ -55,20 +56,11 @@ class SearchPage extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: "column",
     alignItems: "center",
     alignSelf: "stretch",
-    justifyContent: "flex-start",
     margin: 10,
-    paddingTop: 60,
-    backgroundColor: "yellow"
-  },
-  inputPlace: {
-    padding: 20,
-    backgroundColor: 'green',
-    alignSelf: "stretch"
-  },
+  }
 })
 
 export default SearchPage;

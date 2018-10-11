@@ -29,10 +29,11 @@ class MusicVote extends Component {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    justifyContent: 'space-around',
   },
   img: {
-    width: 30,
-    height: 30
+    width: 100,
+    height: 100
   }
 })
 

@@ -95,7 +95,7 @@ class HomeScreen extends Component {
 // This is our "App" component
 export default createStackNavigator(
  {
-   Home: { screen: HomeScreen },
+   Home: { screen: SearchPage },
    Join: { screen: JoinRoom },
    DjPage: { screen: DjPage },
    SearchPage: { screen: SearchPage },
