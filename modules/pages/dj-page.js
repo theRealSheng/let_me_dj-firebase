@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, StyleSheet } from 'react-native';
+import Iframe from 'react-iframe';
 import firebase from 'firebase';
 import MusicVote from './../components/dj/music-vote';
 import { createStackNavigator } from "react-navigation";
@@ -17,6 +18,7 @@ class DjPage extends Component {
       currentUserName: this.props.navigation.getParam('currentUserName', ''),
       roomId: this.props.navigation.getParam('roomId', ''),
       roomPeople: this.props.navigation.getParam('holdArray', ''),
+      myVideoList: this.props.navigation.getParam('videoList', ''),
     }
   }
 
@@ -38,6 +40,16 @@ class DjPage extends Component {
           this.setState({ roomPeople: holdArray })
         }),
     );
+
+    const videoList = this.props.videoList;
+
+    const videosId = videoList.map((video) => video.id.videoId);
+    
+    videosId.forEach((videoId) => {
+      setInterval( ()=> {
+        const videoURl = `https://www.youtube.com/embed/${videoId}`;
+      }, 60000)
+    })
   }
 
 
@@ -48,16 +60,26 @@ class DjPage extends Component {
           <Text>Hello</Text>
         </View>
         <View>
+          <Iframe style={styles.video} url={videoURl}></Iframe>
+        </View>
+        <View>
           <MusicVote />
         </View>
         <View>
           <Button 
-          onPress={() => this.props.navigation.navigate('SearchPage')} 
+          onPress={() => this.props.navigation.navigate('SearchPage', { roomId })} 
           title={'Search Songs'} />
         </View>
       </View>
     );
   }
 }
+
+const style = StyleSheet.create({
+  video: {
+    width: 300,
+    height: 250
+  }
+})
 
 export default DjPage;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Button } from 'react-native';
 import YTSearch from 'youtube-api-search'
 import SearchBar from '../components/search/search-bar';
 import VideoList from '../components/search/video-list';
@@ -12,7 +12,8 @@ class SearchPage extends Component {
     this.state = {
       searchVideos: [],
       myVideoList: [],
-      selectedVideo: null
+      selectedVideo: null,
+      roomId: this.props.navigation.getParam('roomId', '')
     }
   }
 
@@ -25,24 +26,31 @@ class SearchPage extends Component {
     });
   }
 
-  selectVideo = (video) => {
-      // Call the back to update DBS
-      fetch('url', {
-        method: 'POST',
-        body: JSON.stringify(data),
-      })
-      .then((res) => res.json())
-      .then((info) => {
-        console.log(info)
-      })
-    }
+  selectVideo = (video) = {
+
+  }
+
+  returnDjRoom = () => {
+    const videoList = this.state.videosSelected;
+    this.props.navigation.navigate('DjPage')
+  }
 
   render() {
     const searchedVideos = this.state.searchVideos;
+    const roomId = this.props.roomId;
     return (
       <View style={styles.container}>
         <View>
-          <SearchBar onSearchChange={this.videoSearch}/>
+          <Button 
+            onPress={this.returnDjRoom}
+            title={'Return'}
+          />
+        </View>
+        <View>
+          <SearchBar 
+            onSearchChange={this.videoSearch}
+            roomId={roomId}
+            />
         </View>
         <View>
           <VideoList 
