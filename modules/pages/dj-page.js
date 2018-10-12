@@ -75,7 +75,7 @@ class DjPage extends Component {
   }
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   video: {
     width: 300,
     height: 250

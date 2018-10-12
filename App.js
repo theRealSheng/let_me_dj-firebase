@@ -9,7 +9,7 @@ import { createStackNavigator } from "react-navigation";
 
 class HomeScreen extends Component {
   static navigationOptions = {
-    title: 'Home',
+    title: 'Dj With Friends',
   };
 
   state = {
@@ -95,7 +95,7 @@ class HomeScreen extends Component {
 // This is our "App" component
 export default createStackNavigator(
  {
-   Home: { screen: SearchPage },
+   Home: { screen: HomeScreen },
    Join: { screen: JoinRoom },
    DjPage: { screen: DjPage },
    SearchPage: { screen: SearchPage },
