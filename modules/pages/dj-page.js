@@ -52,7 +52,6 @@ class DjPage extends Component {
     })
   }
 
-
   render() {
     return (
       <View>
